@@ -1,0 +1,2 @@
+class StoreError(RuntimeError):
+    pass
