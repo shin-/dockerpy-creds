@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 
 import six
@@ -61,9 +62,18 @@ class Store(object):
                         returncode=process.returncode, cmd='', output=output
                     )
         except subprocess.CalledProcessError as e:
-            raise errors.StoreError(
-                'Credentials store {0} exited with "{1}".'.format(
-                    self.program, e.output.decode('utf-8').strip()
+            raise errors.process_store_error(e, self.program)
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                raise errors.StoreError(
+                    '{0} not installed or not available in PATH'.format(
+                        self.program
+                    )
                 )
-            )
+            else:
+                raise errors.StoreError(
+                    'Unexpected OS error "{0}", errno={1}'.format(
+                        e.strerror, e.errno
+                    )
+                )
         return output
