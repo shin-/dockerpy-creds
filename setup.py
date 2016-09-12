@@ -8,7 +8,7 @@ ROOT_DIR = os.path.dirname(__file__)
 SOURCE_DIR = os.path.join(ROOT_DIR)
 
 requirements = [
-    'six >= 1.10.0',
+    'six >= 1.4.0',
 ]
 
 version = None
@@ -22,7 +22,7 @@ setup(
     name="docker-pycreds",
     version=version,
     description="Python bindings for the docker credentials store API",
-    url='https://github.com/docker/docker-pycreds/',
+    url='https://github.com/shin-/docker-pycreds/',
     packages=[
         'dockerpycreds',
     ],
