@@ -10,11 +10,11 @@ from dockerpycreds import (
 
 
 class TestStore(object):
-    def teardown_method(self):
+    def teardown_method(self, method):
         for server in self.tmp_keys:
             self.store.erase(server)
 
-    def setup_method(self):
+    def setup_method(self, method):
         self.tmp_keys = []
         if sys.platform.startswith('linux'):
             self.store = Store(DEFAULT_LINUX_STORE)
