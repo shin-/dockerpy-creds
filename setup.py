@@ -23,6 +23,7 @@ setup(
     version=version,
     description="Python bindings for the docker credentials store API",
     url='https://github.com/shin-/dockerpy-creds',
+    license='Apache License 2.0',
     packages=[
         'dockerpycreds',
     ],
