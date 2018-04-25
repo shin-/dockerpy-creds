@@ -6,7 +6,7 @@ import six
 
 from . import constants
 from . import errors
-
+from .utils import find_executable
 
 class Store(object):
     def __init__(self, program):
@@ -15,6 +15,13 @@ class Store(object):
             and erasing credentials using `program`.
         """
         self.program = constants.PROGRAM_PREFIX + program
+        self.exe = find_executable(self.program)
+        if self.exe is None:
+            raise errors.InitializationError(
+                '{0} not installed or not available in PATH'.format(
+                    self.program
+                )
+            )
 
     def get(self, server):
         """ Retrieve credentials for `server`. If no credentials are found,
@@ -60,11 +67,11 @@ class Store(object):
         try:
             if six.PY3:
                 output = subprocess.check_output(
-                    [self.program, subcmd], input=data_input
+                    [self.exe, subcmd], input=data_input
                 )
             else:
                 process = subprocess.Popen(
-                    [self.program, subcmd], stdin=subprocess.PIPE,
+                    [self.exe, subcmd], stdin=subprocess.PIPE,
                     stdout=subprocess.PIPE
                 )
                 output, err = process.communicate(data_input)
