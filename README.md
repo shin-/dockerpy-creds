@@ -1,5 +1,7 @@
 # docker-pycreds
 
+[![CircleCI](https://circleci.com/gh/shin-/dockerpy-creds/tree/master.svg?style=svg)](https://circleci.com/gh/shin-/dockerpy-creds/tree/master)
+
 Python bindings for the docker credentials store API
 
 ## Credentials store info
