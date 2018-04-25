@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  test:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -t docker/pycreds-test .
+      - run: docker run docker/pycreds-test
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - test
