@@ -2,6 +2,7 @@ import distutils.spawn
 import os
 import sys
 
+
 def find_executable(executable, path=None):
     """
     As distutils.spawn.find_executable, but on Windows, looks up

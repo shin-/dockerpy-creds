@@ -8,6 +8,7 @@ from . import constants
 from . import errors
 from .utils import find_executable
 
+
 class Store(object):
     def __init__(self, program):
         """ Create a store object that acts as an interface to
