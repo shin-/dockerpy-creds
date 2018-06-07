@@ -5,7 +5,7 @@ import sys
 
 def find_executable(executable, path=None):
     """
-    As distutils.spawn.find_executable, but on Windows, looks up
+    As distutils.spawn.find_executable, but on Windows, look up
     every extension declared in PATHEXT instead of just `.exe`
     """
     if sys.platform != 'win32':
@@ -27,3 +27,12 @@ def find_executable(executable, path=None):
         return None
     else:
         return executable
+
+
+def create_environment_dict(overrides):
+    """
+    Create and return a copy of os.environ with the specified overrides
+    """
+    result = os.environ.copy()
+    result.update(overrides or {})
+    return result
