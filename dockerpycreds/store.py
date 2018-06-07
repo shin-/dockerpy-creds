@@ -6,17 +6,19 @@ import six
 
 from . import constants
 from . import errors
+from .utils import create_environment_dict
 from .utils import find_executable
 
 
 class Store(object):
-    def __init__(self, program):
+    def __init__(self, program, environment=None):
         """ Create a store object that acts as an interface to
             perform the basic operations for storing, retrieving
             and erasing credentials using `program`.
         """
         self.program = constants.PROGRAM_PREFIX + program
         self.exe = find_executable(self.program)
+        self.environment = environment
         if self.exe is None:
             raise errors.InitializationError(
                 '{0} not installed or not available in PATH'.format(
@@ -65,15 +67,16 @@ class Store(object):
 
     def _execute(self, subcmd, data_input):
         output = None
+        env = create_environment_dict(self.environment)
         try:
             if six.PY3:
                 output = subprocess.check_output(
-                    [self.exe, subcmd], input=data_input
+                    [self.exe, subcmd], input=data_input, env=env,
                 )
             else:
                 process = subprocess.Popen(
                     [self.exe, subcmd], stdin=subprocess.PIPE,
-                    stdout=subprocess.PIPE
+                    stdout=subprocess.PIPE, env=env,
                 )
                 output, err = process.communicate(data_input)
                 if process.returncode != 0:

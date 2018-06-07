@@ -1,3 +1,4 @@
+import os
 import random
 import sys
 
@@ -67,3 +68,10 @@ class TestStore(object):
         self.store.erase(key)
         with pytest.raises(CredentialsNotFound):
             self.store.get(key)
+
+    def test_execute_with_env_override(self):
+        self.store.exe = 'env'
+        self.store.environment = {'FOO': 'bar'}
+        data = self.store._execute('--null', '')
+        assert b'\0FOO=bar\0' in data
+        assert 'FOO' not in os.environ
