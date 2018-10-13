@@ -33,7 +33,7 @@ class TestStore(object):
             self.store = Store(DEFAULT_OSX_STORE)
 
     def get_random_servername(self):
-        res = 'pycreds_test_{0:x}'.format(random.getrandbits(32))
+        res = 'pycreds_test_{:x}'.format(random.getrandbits(32))
         self.tmp_keys.append(res)
         return res
 
