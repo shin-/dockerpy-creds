@@ -24,7 +24,11 @@ store.store(
     server='https://index.docker.io/v1/', username='johndoe',
     secret='hunter2'
 )
-print store.get('https://index.docker.io/v1/')
+
+print(store.list())
+
+print(store.get('https://index.docker.io/v1/'))
+
 
 store.erase('https://index.docker.io/v1/')
 ```

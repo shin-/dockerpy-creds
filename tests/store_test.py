@@ -69,6 +69,16 @@ class TestStore(object):
         with pytest.raises(CredentialsNotFound):
             self.store.get(key)
 
+    def test_list(self):
+        names = (self.get_random_servername(), self.get_random_servername())
+        self.store.store(names[0], username='sakuya', secret='izayoi')
+        self.store.store(names[1], username='reimu', secret='hakurei')
+        data = self.store.list()
+        assert names[0] in data
+        assert data[names[0]] == 'sakuya'
+        assert names[1] in data
+        assert data[names[1]] == 'reimu'
+
     def test_execute_with_env_override(self):
         self.store.exe = 'env'
         self.store.environment = {'FOO': 'bar'}

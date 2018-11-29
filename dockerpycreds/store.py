@@ -65,6 +65,12 @@ class Store(object):
             server = server.encode('utf-8')
         self._execute('erase', server)
 
+    def list(self):
+        """ List stored credentials. Requires v0.4.0+ of the helper.
+        """
+        data = self._execute('list', None)
+        return json.loads(data.decode('utf-8'))
+
     def _execute(self, subcmd, data_input):
         output = None
         env = create_environment_dict(self.environment)
