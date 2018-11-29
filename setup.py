@@ -17,11 +17,17 @@ exec(open('dockerpycreds/version.py').read())
 with open('./test-requirements.txt') as test_reqs_txt:
     test_requirements = [line for line in test_reqs_txt]
 
+long_description = None
+with open('./README.md', 'r') as readme:
+    long_description = readme.read()
+
 
 setup(
     name="docker-pycreds",
     version=version,
     description="Python bindings for the docker credentials store API",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/shin-/dockerpy-creds',
     license='Apache License 2.0',
     packages=[
