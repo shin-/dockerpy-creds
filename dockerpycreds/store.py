@@ -21,7 +21,7 @@ class Store(object):
         self.environment = environment
         if self.exe is None:
             raise errors.InitializationError(
-                '{0} not installed or not available in PATH'.format(
+                '{} not installed or not available in PATH'.format(
                     self.program
                 )
             )
@@ -94,13 +94,13 @@ class Store(object):
         except OSError as e:
             if e.errno == os.errno.ENOENT:
                 raise errors.StoreError(
-                    '{0} not installed or not available in PATH'.format(
+                    '{} not installed or not available in PATH'.format(
                         self.program
                     )
                 )
             else:
                 raise errors.StoreError(
-                    'Unexpected OS error "{0}", errno={1}'.format(
+                    'Unexpected OS error "{}", errno={}'.format(
                         e.strerror, e.errno
                     )
                 )
