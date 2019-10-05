@@ -1,10 +1,13 @@
 ARG PYTHON_VERSION=3.7
 
-FROM python:${PYTHON_VERSION}
-RUN apt-get update && apt-get -y install \
-    gnupg2 \
-    pass \
+FROM python:${PYTHON_VERSION}-alpine
+RUN apk add --no-cache \
+    coreutils \
+    gnupg \
     curl
+
+# TODO remove once pass is in the main repository
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing pass
 
 COPY ./tests/gpg-keys /gpg-keys
 RUN gpg2 --import gpg-keys/secret
