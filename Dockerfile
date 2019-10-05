@@ -18,7 +18,14 @@ RUN curl -sSL -o /opt/docker-credential-pass.tar.gz \
     tar -xf /opt/docker-credential-pass.tar.gz -O > /usr/local/bin/docker-credential-pass && \
     rm -rf /opt/docker-credential-pass.tar.gz && \
     chmod +x /usr/local/bin/docker-credential-pass
-COPY . /src
 WORKDIR /src
-RUN python setup.py develop && pip install -r test-requirements.txt
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY test-requirements.txt .
+RUN pip install -r test-requirements.txt
+
+COPY . /src
+RUN python setup.py develop
 CMD pytest -v ./tests
