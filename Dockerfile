@@ -12,9 +12,9 @@ RUN gpg2 --import-ownertrust gpg-keys/ownertrust
 RUN yes | pass init $(gpg2 --no-auto-check-trustdb --list-secret-key | awk '/^sec/{getline; $1=$1; print}')
 RUN gpg2 --check-trustdb
 
-ARG VERSION=v0.6.0
+ARG CREDSTORE_VERSION=v0.6.0
 RUN curl -sSL -o /opt/docker-credential-pass.tar.gz \
-    https://github.com/docker/docker-credential-helpers/releases/download/$VERSION/docker-credential-pass-$VERSION-amd64.tar.gz && \
+    https://github.com/docker/docker-credential-helpers/releases/download/${CREDSTORE_VERSION}/docker-credential-pass-${CREDSTORE_VERSION}-amd64.tar.gz && \
     tar -xf /opt/docker-credential-pass.tar.gz -O > /usr/local/bin/docker-credential-pass && \
     rm -rf /opt/docker-credential-pass.tar.gz && \
     chmod +x /usr/local/bin/docker-credential-pass
