@@ -1,4 +1,6 @@
-FROM python:3.6.4
+ARG PYTHON_VERSION=3.7
+
+FROM python:${PYTHON_VERSION}
 RUN apt-get update && apt-get -y install \
     gnupg2 \
     pass \
@@ -7,7 +9,9 @@ RUN apt-get update && apt-get -y install \
 COPY ./tests/gpg-keys /gpg-keys
 RUN gpg2 --import gpg-keys/secret
 RUN gpg2 --import-ownertrust gpg-keys/ownertrust
-RUN yes | pass init $(gpg2 --no-auto-check-trustdb --list-secret-keys | grep ^sec | cut -d/ -f2 | cut -d" " -f1)
+RUN yes | pass init $(gpg2 --no-auto-check-trustdb --list-secret-key | awk '/^sec/{getline; $1=$1; print}')
+RUN gpg2 --check-trustdb
+
 ARG VERSION=v0.6.0
 RUN curl -sSL -o /opt/docker-credential-pass.tar.gz \
     https://github.com/docker/docker-credential-helpers/releases/download/$VERSION/docker-credential-pass-$VERSION-amd64.tar.gz && \
