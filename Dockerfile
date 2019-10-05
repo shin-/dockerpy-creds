@@ -28,4 +28,4 @@ RUN pip install -r test-requirements.txt
 
 COPY . /src
 RUN python setup.py develop
-CMD pytest -v ./tests
+CMD ["pytest", "-v", "./tests"]
